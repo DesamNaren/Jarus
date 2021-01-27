@@ -1,12 +1,23 @@
 package com.test.jarustest.model;
 
-public class Assignment {
+import android.os.Parcelable;
+
+public class ChildAssignment {
     private int id;
     private String vin;
     private int year;
     private String make;
     private double value;
     private double length;
+
+    public ChildAssignment(int id, String vin, int year, String make, double value, double length) {
+        this.id = id;
+        this.vin = vin;
+        this.year = year;
+        this.make = make;
+        this.value = value;
+        this.length = length;
+    }
 
     public int getId() {
         return id;

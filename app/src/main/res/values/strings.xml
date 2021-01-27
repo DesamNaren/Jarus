@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">JarusTest</string>
+    <string name="choose_equipment">Choose Equipment</string>
+    <string name="expand_collapse">Expand/Collapse</string>
 </resources>
