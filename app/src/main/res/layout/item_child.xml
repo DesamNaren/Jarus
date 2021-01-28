@@ -1,108 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="childData"
+            type="com.test.jarustest.model.ChildAssignment" />
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:background="@color/white"
+android:padding="@dimen/dimen_8dp">
 
     <TextView
         android:id="@+id/tv_vin_key"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:text="VIN"
+        style="@style/text_view_style"
+        android:text="@string/vin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:text="@{childData.vin}"
         android:id="@+id/tv_vin_val"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
+        style="@style/text_view_value_style"
         app:layout_constraintStart_toStartOf="@+id/tv_length_val"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_year_key"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Year"
+        style="@style/text_view_style"
+        android:layout_marginTop="@dimen/dimen_16dp"
+        android:text="@string/year"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_vin_key" />
 
     <TextView
         android:id="@+id/tv_year_val"
+        style="@style/text_view_value_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/app_name"
+        android:layout_marginTop="@dimen/dimen_16dp"
+        android:text="@{``+childData.year}"
         app:layout_constraintStart_toStartOf="@+id/tv_length_val"
         app:layout_constraintTop_toBottomOf="@+id/tv_vin_val" />
 
 
     <TextView
         android:id="@+id/tv_make_key"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Make"
+        style="@style/text_view_style"
+        android:layout_marginTop="@dimen/dimen_16dp"
+        android:text="@string/make"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_year_key" />
 
     <TextView
         android:id="@+id/tv_make_val"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        style="@style/text_view_value_style"
+        android:layout_marginTop="@dimen/dimen_16dp"
+        android:text="@{childData.make}"
         app:layout_constraintStart_toStartOf="@+id/tv_length_val"
         app:layout_constraintTop_toBottomOf="@+id/tv_year_val" />
 
     <TextView
         android:id="@+id/tv_value_key"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Value"
+        style="@style/text_view_style"
+        android:layout_marginTop="@dimen/dimen_16dp"
+        android:text="@string/value"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_make_key" />
 
     <TextView
         android:id="@+id/tv_value_val"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        style="@style/text_view_value_style"
+        android:layout_marginTop="@dimen/dimen_16dp"
+        android:text="@{`$`+childData.value}"
         app:layout_constraintStart_toStartOf="@+id/tv_length_val"
         app:layout_constraintTop_toBottomOf="@+id/tv_make_val" />
 
 
     <TextView
         android:id="@+id/tv_length_key"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Length"
+        style="@style/text_view_style"
+        android:layout_marginTop="@dimen/dimen_16dp"
+        android:text="@string/length"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_value_key" />
 
     <TextView
-        android:text="@string/app_name"
         android:id="@+id/tv_length_val"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        style="@style/text_view_value_style"
+        android:layout_marginTop="@dimen/dimen_16dp"
+        android:layout_marginLeft="@dimen/dimen_16dp"
+        android:text="@{childData.length +` ft`}"
         app:layout_constraintStart_toEndOf="@+id/tv_length_key"
-        app:layout_constraintTop_toBottomOf="@+id/tv_value_val" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_value_val"
+        android:layout_marginStart="@dimen/dimen_16dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

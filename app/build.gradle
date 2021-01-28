@@ -27,19 +27,24 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
+    def gSon = '2.8.5'
+    def expandableRecyclerview = '2.1.1'
+    def appcompat = '1.2.0'
+    def material = '1.2.1'
+    def constraint_layout = '2.0.4'
 
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.2.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation "androidx.appcompat:appcompat:$appcompat"
+    implementation "com.google.android.material:material:$material"
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout"
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
-    implementation 'com.google.code.gson:gson:2.8.5'
-    implementation 'com.bignerdranch.android:expandablerecyclerview:2.1.1'
-
-
+    implementation "com.google.code.gson:gson:$gSon"
+    implementation "com.bignerdranch.android:expandablerecyclerview:$expandableRecyclerview"
 }

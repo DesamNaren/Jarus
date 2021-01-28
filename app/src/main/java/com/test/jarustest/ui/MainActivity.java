@@ -1,17 +1,21 @@
 package com.test.jarustest.ui;
 
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
-import android.util.Log;
 
 import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.test.jarustest.R;
+import com.test.jarustest.databinding.ActivityMainBinding;
+import com.test.jarustest.error_handler.ErrorHandlerInterface;
 import com.test.jarustest.model.ChildAssignment;
 import com.test.jarustest.model.ParentAssignment;
 
@@ -20,28 +24,36 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ErrorHandlerInterface {
 
-    private String jsonFileString;
+    private ActivityMainBinding binding;
+    private AssignmentViewModel assignmentViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        AssignmentViewModel assignmentViewModel = new AssignmentViewModel();
-        assignmentViewModel.getData(getApplicationContext()).observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                jsonFileString = s;
-                Log.i("data", jsonFileString);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        assignmentViewModel = new AssignmentViewModel();
+        loadData();
+    }
 
-                Gson gson = new Gson();
+    @Override
+    public void handleError(String msg) {
+        Snackbar.make(binding.toolbarTop, msg, Snackbar.LENGTH_LONG).setAction(getString(R.string.retry), new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadData();
+            }
+        }).show();
+    }
+
+    private void loadData() {
+        assignmentViewModel.getData(getApplicationContext()).observe(this, outputString -> {
+            if (!TextUtils.isEmpty(outputString)) {
                 Type listUserType = new TypeToken<List<ChildAssignment>>() {
                 }.getType();
-                List<ChildAssignment> totalAssignments = gson.fromJson(jsonFileString, listUserType);
-
+                List<ChildAssignment> totalAssignments = new Gson().fromJson(outputString, listUserType);
                 List<ParentListItem> parentListItems = new ArrayList<>();
-
                 for (int i = 0; i < Objects.requireNonNull(totalAssignments).size(); i++) {
                     List<ChildAssignment> childAssignments = new ArrayList<>();
                     ChildAssignment childAssignment = new ChildAssignment(
@@ -54,17 +66,18 @@ public class MainActivity extends AppCompatActivity {
                     childAssignments.add(childAssignment);
                     ParentAssignment parentAssignment = new ParentAssignment(totalAssignments.get(i).getId(), totalAssignments.get(i).getMake());
                     parentAssignment.setChildItemList(childAssignments);
-
                     parentListItems.add(parentAssignment);
                 }
-
-
-                RecyclerView recyclerView = findViewById(R.id.rv_assignments);
-                LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-                recyclerView.setLayoutManager(layoutManager);
-                recyclerView.setAdapter(new AssignmentAdapter(getApplicationContext(), parentListItems));
+                if (parentListItems.size() > 0) {
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                    binding.rvAssignments.setLayoutManager(layoutManager);
+                    binding.rvAssignments.setAdapter(new AssignmentAdapter(getApplicationContext(), parentListItems));
+                }else {
+                    handleError(getString(R.string.no_data_found));
+                }
+            } else {
+                handleError(getString(R.string.something));
             }
         });
-
     }
 }

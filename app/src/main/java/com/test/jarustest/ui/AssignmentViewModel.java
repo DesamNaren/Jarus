@@ -7,6 +7,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.test.jarustest.R;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -15,28 +17,24 @@ import java.util.concurrent.Executors;
 
 public class AssignmentViewModel extends ViewModel {
 
-    MutableLiveData<String> output = new MutableLiveData<>();
+    MutableLiveData<String> stringMutableLiveData = new MutableLiveData<>();
 
     public LiveData<String> getData(Context context) {
-        if (output != null) {
+        if (stringMutableLiveData != null) {
             ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-            executorService.execute(new Runnable() {
-                public void run() {
-                    output.postValue(getJsonFromAssets(context));
-                }
-            });
+            executorService.execute(() -> stringMutableLiveData.postValue(getJsonFromAssets(context)));
 
             executorService.shutdown();
 
         }
-        return output;
+        return stringMutableLiveData;
     }
 
     private String getJsonFromAssets(Context context) {
-        String jsonString;
+        String outputString;
         try {
-            InputStream is = context.getAssets().open("assignment.json");
+            InputStream is = context.getAssets().open(context.getString(R.string.file_name));
 
             int size = is.available();
             byte[] buffer = new byte[size];
@@ -44,15 +42,15 @@ public class AssignmentViewModel extends ViewModel {
             is.close();
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                jsonString = new String(buffer, StandardCharsets.UTF_8);
+                outputString = new String(buffer, StandardCharsets.UTF_8);
             } else {
-                jsonString = new String(buffer, "UTF-8");
+                outputString = new String(buffer, context.getString(R.string.format_name));
             }
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
 
-        return jsonString;
+        return outputString;
     }
 }

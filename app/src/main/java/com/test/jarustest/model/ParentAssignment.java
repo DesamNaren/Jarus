@@ -9,7 +9,6 @@ public class ParentAssignment implements ParentListItem {
     private final int mId;
     private final String mTitle;
     private boolean isChecked;
-    private boolean isExpanded;
     private List<ChildAssignment> mChildItemList;
 
     public ParentAssignment(int mId, String mTitle) {
@@ -33,14 +32,6 @@ public class ParentAssignment implements ParentListItem {
         return mTitle;
     }
 
-    public boolean isExpanded() {
-        return isExpanded;
-    }
-
-    public void setExpanded(boolean expanded) {
-        isExpanded = expanded;
-    }
-
     @Override
     public List<ChildAssignment> getChildItemList() {
         return mChildItemList;
@@ -54,7 +45,4 @@ public class ParentAssignment implements ParentListItem {
     public void setChildItemList(List<ChildAssignment> list) {
         mChildItemList = list;
     }
-
-
-
 }

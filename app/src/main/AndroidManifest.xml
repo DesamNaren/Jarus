@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JarusTest">
         <activity android:name=".ui.MainActivity"
-            android:screenOrientation="unspecified"
             android:theme="@style/Theme.Design.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
