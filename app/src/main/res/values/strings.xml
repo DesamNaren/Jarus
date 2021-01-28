@@ -11,6 +11,5 @@
     <string name="something">Something went wrong, Please try later</string>
     <string name="retry">Retry</string>
     <string name="file_name">assignment.json</string>
-    <string name="format_name">UTF-8</string>
     <string name="no_data_found">No Data Found</string>
 </resources>
