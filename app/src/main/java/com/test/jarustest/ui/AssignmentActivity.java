@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements ErrorHandlerInterface {
+public class AssignmentActivity extends AppCompatActivity implements ErrorHandlerInterface {
 
     private ActivityMainBinding binding;
     private AssignmentViewModel assignmentViewModel;
